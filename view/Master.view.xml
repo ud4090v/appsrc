@@ -1,0 +1,160 @@
+<core:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout" xmlns:f="sap.f" xmlns:tnt="sap.tnt" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="ula.mes.order.maint.controller.Master">
+    <f:DynamicPage class="sapUiSizeCompact mesUI" id="mPage" backgroundDesign="Transparent">
+        <f:title>
+            <f:DynamicPageTitle backgroundDesign="Transparent">
+                <f:heading>
+                    <Toolbar style="Clear" width="100%" height="3rem" design="Transparent" class="mesHeadBar">                        
+						<!-- <MenuButton useDefaultActionOnly="true" id="OrdActionMenu"
+							width="6.5rem" buttonMode="Split"
+							defaultAction="onDefaultOrderAction"
+							class="sapUiSmallMarginEnd ulaActionMenu"
+							visible="{=${uiModel>HoldStatus} === 'H' }" 
+                            text = "Hold"
+							icon="sap-icon://flag" >
+							<menu>
+								<core:Fragment
+									fragmentName="ula.mes.exec.view.fragments.OrdStartMenu" type="XML" />
+							</menu>
+						</MenuButton> -->
+                        <Button text='Cancelled' icon="sap-icon://cancel" class="sapUiSmallMarginEnd ulaActionMenuRed" visible="{app>/Cancelled}"/>
+						<Button text='Scrapped' icon="sap-icon://cancel" class="sapUiSmallMarginEnd ulaActionMenuRed" visible="{app>/Scrapped}"/> 
+					    <Title text="Order: {app>/OrderNo}" class="ulaMesoHeaderTitle" />
+                     </Toolbar>		  						
+                    
+                </f:heading>
+                <f:expandedContent>
+                    <Label text="{app>/Material} {app>/MaterialDescription}" />
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label text="{app>/Material} {app>/MaterialDescription}" />
+                </f:snappedContent>
+                <f:snappedTitleOnMobile>
+                    <Title text="{app>/Material} {app>/MaterialDescription}" />
+                </f:snappedTitleOnMobile>
+
+                <f:content>
+                    <OverflowToolbar>
+                        <!-- <MenuButton text="Rev {app>/OrderRevNo}" defaultAction="handleOrderRevisionsSelectPress" useDefaultActionOnly="true" menuPosition="RightBottom">
+                            <Menu itemSelect="handleOrderRevisionsSelectPress">
+								<items>
+									<MenuItem text="{your_field_name}" icon="{your_field_name}"/>
+            					</items>
+                            </Menu>
+                        </MenuButton> -->
+                        <!-- <GenericTag text="Rev {app>/OrderRevNo}" status="{ path : 'app>/Revstat', formatter : '.fmtRevStat'}" press="handleOrderRevisionsSelectPress" design="StatusIconHidden" /> -->
+                    </OverflowToolbar>
+                </f:content>
+
+                <f:actions>
+                    <ToolbarSpacer/>
+                </f:actions>
+                <f:navigationActions>
+                <OverflowToolbar design="Transparent" style="Clear">
+                    <Button press="handleMessagePopoverPress" type="Transparent" tooltip="Review Error Messages" text="{app>/ErrorCount}" visible="{= ${app>/fSubmit} &amp;&amp; !${app>/editMode} &amp;&amp; ${app>/fEditable} &amp;&amp; ${app>/ErrorCount} > 0}" icon="sap-icon://error" />
+                    <Button id="addFavourites" press="toggleFavourites" type="Transparent" tooltip="Add Favorite" icon=" " />
+                    <Button press="onRefreshSubmitPress" type="Transparent" tooltip="Reload Order" text="" icon="sap-icon://synchronize" />
+                    <Button press="onReviewSubmitPress" text="" type="Emphasized" tooltip="Submit for Review" visible="{= ${app>/fSubmit} &amp;&amp; !${app>/editMode} &amp;&amp; ${app>/fEditable}}" icon="sap-icon://journey-depart" />
+                    <Button press="onValidateSubmitPress" text="" type="Emphasized" tooltip="Validate Order" visible="{= ${app>/fSubmit} &amp;&amp; !${app>/editMode} &amp;&amp; ${app>/fEditable}}" icon="sap-icon://validate" />
+                    <Button icon="sap-icon://unlocked" text="" tooltip="Lock Order" visible="{= !${app>/orderLocked} &amp;&amp; ${app>/fEditable} }" press="handleLockRevision" />
+                    <Button icon="sap-icon://edit" text="" tooltip="Create Revision" visible="{= ${app>/fEditable} &amp;&amp; ${app>/fCrev} }" press="handleCreateRevision" />
+                    <Button icon="sap-icon://locked" text="" tooltip="Unlock Order Revision" visible="{= ${app>/fEdit} &amp;&amp; ${app>/orderLocked} &amp;&amp; ${app>/fEditable}}" press="handleUnlockRevision" />
+                    <Button icon="sap-icon://activity-2" text="" tooltip="MCN Update" visible="{= !${app>/orderLocked} &amp;&amp; ${app>/fEditable} }" press="onEditMCN" />
+                    <Button press="handleReviseRevision" text="" type="Emphasized" tooltip="Revise Order" visible="{= ${app>/fEditable} &amp;&amp; ${app>/fRevise} }" icon="sap-icon://edit" />
+                    <Button text="Order Details" icon="sap-icon://media-rewind" visible="{app>/fShowdet}" press="handleOrderDetails">
+                        <layoutData>
+                            <OverflowToolbarLayoutData priority="AlwaysOverflow" closeOverflowOnInteraction="false" />
+                        </layoutData>
+                    </Button>
+                    <Button text="Activity History" icon="sap-icon://history" visible="{app>/fRevrec}" press="onShowRevHistory">
+                        <layoutData>
+                            <OverflowToolbarLayoutData priority="AlwaysOverflow" closeOverflowOnInteraction="false" />
+                        </layoutData>
+                    </Button>
+
+                    <!-- <OverflowToolbarButton icon="sap-icon://overflow" press="onAddButtonPress" type="Transparent">
+                        <dependents>
+                            <core:Fragment fragmentName="ula.mes.order.maint.view.fragments.OrderActionSheet" type="XML" />
+                        </dependents>
+                    </OverflowToolbarButton> -->
+                         </OverflowToolbar>
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader pinnable="true" backgroundDesign="Transparent">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+
+                        <!-- <ObjectAttribute title="Revision Status" text="{app>/Revstat}" /> -->
+                        <FlexBox class="sapUiTinyMarginEnd" alignItems="Center" justifyContent="Start">
+                            <Text renderWhitespace="false" width='5rem' text="Dev Type:" />
+                            <Text renderWhitespace="false" text="{app>/DevType}" />
+                        </FlexBox>
+
+                        <!-- <ObjectAttribute title="Dev type" text="{app>/DevType}" /> -->
+                        <!-- <ObjectAttribute title="Order Rev" text="{app>/OrderRevNo}" /> -->
+                        <!-- <ObjectAttribute title="Total Qty" text="{app>/TotalQty}" /> -->
+                        <FlexBox class="sapUiTinyMarginEnd" alignItems="Center" justifyContent="Start">
+                            <Text renderWhitespace="false" width='5rem' text="Total Qty:" />
+                            <Text renderWhitespace="false" text="{app>/TotalQty}" />
+                        </FlexBox>
+                        <FlexBox class="sapUiTinyMarginEnd" alignItems="Center" justifyContent="Start">
+                            <Text renderWhitespace="false" width='5rem' text="Order Rev:" />
+
+                            <Select id="MESOrdRevSel" class="ulaNarrowFld" 
+                                    enabled="{/Enabled}" editable="{/Editable}" 
+                                    forceSelection="true" 
+                                    selectedKey="{app>/OrderRevNo}" 
+                                    change="onRevChange"
+                                    items="{
+							            path: '/OrderRevisionSet',
+							            sorter: { path: 'RevNo' }
+						            }">
+                                <core:Item id="MESSelTpl" key="{RevNo}" text="{Name}" />
+                            </Select>
+                        </FlexBox>
+                        <FlexBox class="sapUiTinyMarginEnd" alignItems="Center" justifyContent="Start">
+                            <Text renderWhitespace="false" width='5rem' text="Rev Status:" />
+                            <Text renderWhitespace="false" text="{app>/Revstat}" />
+                        </FlexBox>
+
+                        <!-- <HBox alignItems="Center" justifyContent="Start">
+                            <Label text="Order Rev: " class="ulaRMargin" />
+                        </HBox> -->
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <List id="MESOrdOps" mode="SingleSelectMaster" width="auto" growing="false" growingScrollToLoad="true" growingTriggerText="{i18n>loadMore}" items="{}" updateFinished="onOpListUpdateFinished" itemPress="onOperationListItemPress" select="onOperationSelected">
+                <headerToolbar>
+                    <Toolbar style="Clear" design="Transparent" class="mesHeadBar">
+                        <Title text="Operations" />
+                        <ToolbarSpacer />
+                    </Toolbar>
+                </headerToolbar>
+                <items>
+                    <CustomListItem id="OperationListItem" type="Navigation" press="onOperationListItemPress" class="ulasapMLIB">
+                        <content>
+                            <VBox justifyContent="Center">
+                                <HBox>
+                                    <Label text="{OperationNo} {OpText}" class="sapUiTinyMarginTop" />
+                                    <core:Icon size="0.8rem" src="sap-icon://shortcut" class="sapUiTinyMarginBegin sapUiTinyMarginTop" visible="{=${Skippable}  === true }" />
+                                </HBox>
+                                <HBox>
+                                    <tnt:InfoLabel text="Hold" displayOnly='false' visible="{Oxhold}" renderMode="Narrow" class="sapUiTinyMarginTop sapUiTinyMarginBottom ulaHoldChip" colorScheme='3' />
+                                    <!-- 									<Button id="OperStatusInfoLabel"  -->
+                                    <!-- 									text="Hold" displayOnly='true' visible="{=${uiModel>HoldStatus} === 'H'}"  -->
+                                    <!-- 									icon="sap-icon://flag" -->
+                                    <!-- 									renderMode="Narrow" colorScheme="3"  class="sapUiTinyMarginTop sapUiTinyMarginBottom ulaHoldChip"/>									 -->
+                                    <tnt:InfoLabel id="OperationStatusInfoLabel" text="{StatusTxt}" renderMode="Narrow" colorScheme="{ path: 'Status', formatter:'.formatter.statusColorScheme'}" class="sapUiTinyMarginTop sapUiTinyMarginBottom ulaStatusChip" />
+                                </HBox>
+                            </VBox>
+                        </content>
+                    </CustomListItem>
+                </items>
+            </List>
+        </f:content>
+    </f:DynamicPage>
+</core:View>

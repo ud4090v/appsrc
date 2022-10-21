@@ -1,0 +1,33 @@
+<mvc:View
+	height="100%"
+	controllerName="ula.mes.order.maint.controller.Detail"
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:tnt="sap.tnt"
+	xmlns:layout="sap.ui.layout"
+	xmlns:f="sap.f"
+	xmlns="sap.m">
+	<ObjectHeader
+		id="oh1"
+		responsive="true"
+		fullScreenOptimized="true"
+		intro="Oper Rev: 002  Dev Type: Temporary"
+		title="{detail>/OperationNo} {detail>/OpText}"
+		titleActive="false"
+		showMarkers="true"
+		markFlagged="false"
+		markFavorite="false"
+		backgroundDesign="Translucent"
+		class="sapUiResponsivePadding--header" >
+		<statuses>
+ 			<ObjectStatus
+				title=""
+				text="{detail>/StatusTxt}"
+				inverted="true"
+				state="{path:'detail>/Status', formatter:'.formatter.statusState'}" />
+		</statuses>
+		<headerContainer>
+		<tnt:InfoLabel id="il9" text="in warehouse" colorScheme="9" displayOnly= "true" />
+		</headerContainer>
+	</ObjectHeader>
+</mvc:View>

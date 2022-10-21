@@ -1,0 +1,229 @@
+<core:View xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns="sap.m" 
+	xmlns:m="sap.m"
+	xmlns:f="sap.f" 
+	xmlns:tnt="sap.tnt" 
+	xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form" 
+	xmlns:uxap="sap.uxap"
+	xmlns:richtexteditor="sap.ui.richtexteditor"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	controllerName="ula.mes.order.maint.controller.Main"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+
+	<Page title="MES" showHeader="false" class="sapUiSizeCompact sergeTest">
+		<content>
+			<uxap:ObjectPageLayout id="ObjectPageLayout"
+				showTitleInHeaderContent="true" alwaysShowContentHeader="false"
+				preserveHeaderStateOnScroll="false" headerContentPinnable="true"
+				isChildPage="true" upperCaseAnchorBar="false">
+
+				<uxap:headerTitle>
+					<uxap:ObjectPageDynamicHeaderTitle>
+						<uxap:heading>
+							<HBox alignItems="Center" class="ulaFlexBox">
+								<tnt:InfoLabel text="Hold" colorScheme="3"
+									displayOnly="true" visible="{detail>/Oxhold}" />
+								<tnt:InfoLabel text="{detail>/StatusTxt}"
+									colorScheme="{path:'detail>/Status', formatter:'.formatter.statusColorScheme'}"
+									displayOnly="true" />
+								<Title text="{detail>/OperationNo} {detail>/OpText}"
+									wrapping="true" />
+								<core:Icon size="0.8rem" src="sap-icon://shortcut" class="sapUiTinyMarginBegin sapUiTinyMarginTop" visible="{=${detail>/Skippable}  === true }"/>	
+                                <Text text="Skippable" class="sapUiTinyMarginBegin" visible="{=${detail>/Skippable}  === true }"/>									
+							</HBox>
+						</uxap:heading>
+
+						<uxap:expandedContent>
+							<m:VBox justifyContent="Start">
+								<HBox alignItems="Center" class="ulaFlexBox">
+									<Label text="Oper Rev:" />
+									<Text text=" {detail>/OpRevno} "/>
+									<Label text="Setup(hr):" />
+									<Text text="{detail>/OpSetupTime}"/>
+									<Label text="Op Type:" />
+									<Text text="Production"/>
+								</HBox>
+								<HBox alignItems="Center" class="ulaFlexBox">
+									<Label text="Dev Type:" />
+									<Text text="{detail>/OpDevtype}"/>
+									<Label text="Run(hr):" />
+									<Text text="{detail>/OpRunTime}"/>
+									<Label text="Work Center:" />
+									<Text text="{detail>/WorkCenter}"/>
+								</HBox>
+								<HBox alignItems="Center" class="ulaFlexBox">
+									<Label text="Site:" />
+									<Text text="{detail>/Plant}"/>
+									<Label text="xxxx xxxx xxxxx xxxx " />
+								</HBox>
+							</m:VBox>
+						</uxap:expandedContent>
+
+
+						<uxap:actions>
+							<m:OverflowToolbarButton
+								icon="sap-icon://overflow" press="onOperActionMenu"
+								visible="{= ${app>/fEdit} &amp;&amp; !${app>/editMode} &amp;&amp; !${app>/orderLocked} }" />
+					<!--		visible="{= ${app>/fEdit} &amp;&amp; ${detail>/FEdit} &amp;&amp; !${app>/editMode} &amp;&amp; !${app>/orderLocked} }" /> -->
+							<!-- <m:OverflowToolbarButton icon="sap-icon://edit" press="handleEditRevision" 
+								visible="{= ${app>fEdit} &amp;&amp; ${backend>FEdit} &amp;&amp; !${app>/editMode} 
+								&amp;&amp; !${app>/orderLocked} }" /> <m:OverflowToolbarButton icon="sap-icon://save" 
+								press="handleSaveOperation" visible="{app>/editMode}" /> <m:OverflowToolbarButton 
+								icon="sap-icon://delete" press="onDeleteOper" visible="{= ${app>fEdit} &amp;&amp; 
+								${backend>FDelete} &amp;&amp; !${app>/editMode} &amp;&amp; !${app>/orderLocked}}" 
+								/> -->
+							<m:OverflowToolbarButton
+								icon="sap-icon://full-screen" press="onToggleFullScreen" type="Transparent"
+								visible="{= ${app>/actionButtonsInfo/midColumn/fullScreen} === false }" />
+							<m:OverflowToolbarButton
+								icon="sap-icon://exit-full-screen" press="onToggleFullScreen" type="Transparent"
+								visible="{= ${app>/actionButtonsInfo/midColumn/fullScreen} === true }" />
+							<m:OverflowToolbarButton
+								icon="sap-icon://decline" press="onCloseDetail" tooltip="Close detail screen" type="Transparent"/>
+						</uxap:actions>
+					</uxap:ObjectPageDynamicHeaderTitle>
+				</uxap:headerTitle>
+
+				<uxap:headerContent>
+					
+					<OverflowToolbar design="Transparent" style="Clear"
+						visible="{= ${app>/fEdit} &amp;&amp; !${app>/orderLocked} }">
+						<ToolbarSpacer />
+						<m:OverflowToolbarButton
+							icon="sap-icon://overflow" tooltip="Step Actions"
+							press="onStepHeaderActionMenu"
+							visible="{path:'detail>/', formatter:'.fmtShowOpAddStep'}" />
+					</OverflowToolbar>
+
+							<!-- visible="{= ${app>fEdit} &amp;&amp; !${app>/orderLocked} }" /> -->
+
+				</uxap:headerContent>
+
+				<uxap:sections>
+					<uxap:ObjectPageSection id="OperationSteps"
+						title="Steps" subSections="{}" class="ulaStep" titleUppercase="false">
+
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection
+								id="StepSubSection" class="ulaWorkstep">
+
+								<uxap:blocks>
+
+									<Panel id="ContentPanel" expandable="true" width="auto"
+										class="sapUiResponsiveMargin" expand="onContentPanelExpand"
+										app:WorkStep="{backend>SubOperationNo}">
+										<headerToolbar>
+											<OverflowToolbar height="3rem" style="Clear">
+												<HBox alignItems="Center" class="ulaFlexBox">
+													<core:Icon src="sap-icon://delete" tooltip="Delete"
+														visible="{backend>Loekz}" color="red">
+													</core:Icon>
+
+													<tnt:InfoLabel text="Hold" colorScheme="3"
+														displayOnly="true" visible="{backend>Oxhold}" />
+													<tnt:InfoLabel text="{backend>Statustxt}"
+														colorScheme="{path:'backend>Status', formatter:'.formatter.statusColorScheme'}"
+														displayOnly="true" />
+													<Title
+														text="{backend>SubOperationNo} {backend>SubOpText}" class="ULAWorkStepTitle"/>
+
+													<core:Icon size="1rem" src="sap-icon://shortcut" class="sapUiTinyMarginBegin"  color="#0070b1" visible="{=${backend>Skippable}  === true }" press="showStepSkippableRationaleDialog"/>
+                                					<Link text="Skippable" class="sapUiNoMarginBegin ulaSkippableText" visible="{=${backend>Skippable}  === true }" press="showStepSkippableRationaleDialog"/>		
+												</HBox>
+												<ToolbarSpacer />
+
+												<Button icon="sap-icon://message-warning"
+														id="ShowQNotesActionSheet"
+														visible="{=parseInt(${backend>Qncnt}) > 0 }"
+														press="executeAction"
+														text="{= parseInt(${backend>Qncnt}) > 0 ? '(' + ${backend>Qncnt} + ')' : ''}">
+													<customData>
+														<core:CustomData
+															key="press"
+															value="onShowQNotesActionSheet"
+														/>
+													</customData>
+
+													<dependents>
+                                        				<ActionSheet buttons="{ path : 'backend>QNotes', templateShareable : true }">
+                                            				<Button
+                                                				text="{backend>Qmnum}"
+                                                				press="executeAction" >
+																<customData>
+																	<core:CustomData
+																		key="press"
+																		value="onNavigateToQNote"
+																	/>
+																</customData>
+
+															</Button>
+                                        				</ActionSheet>
+                                    				</dependents>
+
+												</Button>
+
+				                                <Button 
+                				                    icon="sap-icon://request" 
+				                                    visible="{=parseInt(${backend>Sncnt}) > 0 }"
+                				                    press="executeAction" 
+                                				    tooltip="Shop Notes"
+				                                    text="{= parseInt(${backend>Sncnt}) > 0 ? '(' + ${backend>Sncnt} + ')' : ''}">
+													<customData>
+														<core:CustomData
+															key="press"
+															value="onShowShopNotesButtonPress"
+														/>
+													</customData>
+                				                </Button>
+
+
+												<Button icon="sap-icon://attachment"
+													visible="{=parseInt(${backend>OexAttCnt}) > 0 }"
+													press="onShowShopAttachmentsButtonPress"
+
+													text="{= parseInt(${backend>OexAttCnt}) > 0 ? '(' + ${backend>OexAttCnt} + ')' : ''}">
+												</Button>
+
+												<VBox>
+													<items>
+														<m:Label text="Step Rev: {backend>SubOpRevNo}" />
+														<m:Label text="Dev Type: {backend>SubOpDevType}" />
+													</items>
+												</VBox>
+												<Button icon="sap-icon://overflow"
+													press="onStepActionMenu"
+													visible="{path:'backend>', formatter:'.fmtShowStepActionButton'}">
+
+												</Button>
+												<Button icon="sap-icon://drop-down-list"
+													press="onTopAddBelowButtonPress"
+													visible="{path:'backend>', formatter:'.fmtShowStepActionMenuButton'}">
+
+												</Button>
+											</OverflowToolbar>
+										</headerToolbar>
+										<content>
+											<core:Fragment
+												fragmentName="ula.mes.common.view.fragments.ContentItem"
+												type="XML" />
+										</content>
+
+									</Panel>
+
+								</uxap:blocks>
+
+
+							</uxap:ObjectPageSubSection>
+							<uxap:ObjectPageSubSection title="sub2"
+								id="StepSubSection1" class="ulaWorkstep">
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+				</uxap:sections>
+			</uxap:ObjectPageLayout>
+
+		</content>
+	</Page>
+</core:View>
