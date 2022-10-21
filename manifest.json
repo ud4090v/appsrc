@@ -1,0 +1,165 @@
+{ "sap.app": {
+		"_version": "1.1.0",
+		"id": "ula.mes.order.maint",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.1.1" 
+		},
+		"resources": "resources.json",
+		"ach": "ach",
+		"dataSources": {
+		
+		}
+	},
+	"sap.ui5": {
+        "rootView": {
+			"viewName": "ula.mes.order.maint.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "mesOM"
+		},
+		"dependencies": {
+			"libs": {
+				"sap.ui.core": {
+				},
+				"sap.m": {
+				},
+				"sap.f": {
+				},
+				"sap.tnt": {}
+			}
+		},
+		"services": {
+			"ShellUIService": {
+				"factoryName": "sap.ushell.ui5service.ShellUIService"
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ula.mes.order.maint.i18n.i18n"
+				}
+			},
+			"viewModel" : {
+			  "type": "sap.ui.model.json.JSONModel"
+			}			
+		},
+		"resources": {
+			"js": [
+				{
+					"uri": "js/mustache.min.js"
+				}
+			],
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+	
+		"config": {
+			"fullWidth": true,
+			"resourceBundle": "i18n/i18n.properties",
+			"serviceConfig": {
+				"name": "Z_CES_RPT_SRV",
+				"serviceUrl": "/sap/opu/odata/sap/ZMES_OM_SRV/"
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.f.routing.Router",
+				"viewType": "XML",
+				"viewPath": "ula.mes.order.maint.view",
+				"controlId": "fcl",
+				"transition": "slide",
+				"controlAggregation": "beginColumnPages",
+				"bypassed": {
+				},
+				"async": true
+			},
+			"routes":[
+				{
+					"pattern" : ":?query:",
+					"name" : "query",
+					"target" : ["default"]
+				}, 
+				{
+					"pattern":"",
+					"name":"blank",
+					"target":["default"]
+				},
+				{
+					"pattern":"OrderNo/{OrderNo}/{OperationNo}",
+					"name":"master",
+					"target":["master"]
+				},
+				{
+					"pattern":"OrderNo/{OrderNo}/{OperationNo}/{SubOperationNo}",
+					"name":"stepmaster",
+					"target":["master"]
+				},
+				{
+					"pattern":"detail/{OperationNo}",
+					"name":"detail",
+					"target":["master","detail"]
+				},
+				{
+					"pattern":"detail/{OperationNo}/{SubOperationNo}",
+					"name":"stepDetail",
+					"target":["master","detail"]
+				},
+				{
+					"pattern":"detail/{OperationNo}/{SubOperationNo}",
+					"name":"opstepdetail",
+					"target":["master","detail"]
+				}
+			],
+			"targets": {
+				"master": {
+					"viewName":"Master",
+					"viewLevel": 1,
+					"viewType": "XML",
+					"viewId":"master",
+					"controlAggregation":"beginColumnPages"	
+				},
+				"stepmaster": {
+					"viewName":"Master",
+					"viewLevel": 1,
+					"viewType": "XML",
+					"viewId":"master",
+					"controlAggregation":"beginColumnPages"	
+				},
+				"detail": {
+					"viewName":"Main",
+					"viewType": "XML",
+					"viewLevel": 1,
+					"viewId":"detail",
+					"controlAggregation":"midColumnPages"	
+				},
+				"opstepdetail": {
+					"viewName":"Main",
+					"viewType": "XML",
+					"viewLevel": 1,
+					"viewId":"detail",
+					"controlAggregation":"midColumnPages"	
+				},
+				"stepDetail": {
+					"viewName":"Main",
+					"viewType": "XML",
+					"viewLevel": 1,
+					"viewId":"detail",
+					"controlAggregation":"midColumnPages"	
+				},
+				"default": {
+					"viewName":"Default",
+					"viewType": "XML",
+					"viewLevel": 1,
+					"viewId":"default",
+					"controlAggregation":"beginColumnPages"	
+				}				
+			}
+		}
+	}
+}
