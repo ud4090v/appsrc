@@ -1,0 +1,39 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:ui="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+
+<!--
+	<Menu itemSelected="onOpMenuAction">
+		<MenuItem icon="sap-icon://edit" text="Revise Oper" press="onReviseOper" visible="{= !${app>/orderLocked} &amp;&amp; !${detail>/Revise} &amp;&amp; ${detail>/FEdit} }" />
+		<MenuItem icon="sap-icon://edit" text="Edit Oper" press="onChangeOper" visible="{= !${app>fEdit} &amp;&amp; !${app>/orderLocked} &amp;&amp; ${detail>/Revise}  &amp;&amp; ${detail>/FEdit} }" />
+		<MenuItem icon="sap-icon://add" text="Add Oper" press="onAddOper" visible="{= !${app>/orderLocked}  }"/>
+		<MenuItem icon="sap-icon://delete" text="Delete Oper" press="onDeleteOper" visible="{= !${app>/orderLocked} &amp;&amp; ${detail>/Revise}  &amp;&amp; ${detail>/FDelete} }"/>
+	</Menu>
+-->
+
+	<!-- <Menu>
+		<MenuItem icon="sap-icon://edit" text="Revise Oper" press="doReviseOperation" visible="{= !${/Revise} &amp;&amp; ${/FEdit} }" />
+		<MenuItem icon="sap-icon://edit" text="Edit Oper" press="doChangeOperation" visible="{= ${/Revise}  &amp;&amp; ${/FEdit} }" />
+		<MenuItem icon="sap-icon://add" text="Add Oper" press="doAddOperation" />
+		<MenuItem icon="sap-icon://copy" text="Copy Oper" press="doCopyOperation" />
+		<MenuItem icon="sap-icon://delete" text="Delete Oper" press="doDeleteOperation" visible="{= ${/Revise}  &amp;&amp; ${/FDelete} }"/>
+	</Menu> -->
+
+	<Menu>
+		<MenuItem icon="sap-icon://edit" text="Revise Oper" press="onReviseOper" visible="{= !${/Revise} &amp;&amp; ${/FEdit} }" />
+		<MenuItem icon="sap-icon://edit" text="Edit Oper" press="onChangeOper" visible="{= ${/Revise}  &amp;&amp; ${/FEdit} }" />
+		<MenuItem icon="sap-icon://add" text="Add Oper" press="doAddOperation" />
+		<MenuItem icon="sap-icon://copy" text="Copy Oper" press="doCopyOperation" />
+		<MenuItem icon="sap-icon://delete" text="Delete Oper" press="onDeleteOper" visible="{= ${/Revise}  &amp;&amp; ${/FDelete} }"/>
+	</Menu>
+
+<!--	
+	<Menu itemSelected="onOpMenuAction">
+		<MenuItem icon="sap-icon://edit" text="Reviseee Oper" press="onReviseOper" visible="{path:'detail>', formatter:'.fmtShowOpReviseAction'}" />
+		<MenuItem icon="sap-icon://edit" text="Edit Oper" press="onChangeOper" visible="{path:'detail>', formatter:'.fmtShowOpEditAction'}" />
+		<MenuItem icon="sap-icon://add" text="Add Oper" press="onAddOper" visible="{= !${app>/orderLocked}  }"/>
+		<MenuItem icon="sap-icon://delete" text="Delete Oper" press="onDeleteOper" visible="{path:'detail>', formatter:'.fmtShowOpDeleteAction'}"/>
+	</Menu>
+-->
+</core:FragmentDefinition>

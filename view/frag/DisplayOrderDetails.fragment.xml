@@ -1,0 +1,112 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
+	xmlns:richtexteditor="sap.ui.richtexteditor"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"	
+>
+	
+	<Dialog id="DisplayOrderDetailsDialog" title="Order Details" class="sapUiSizeCompact" resizable = "true" draggable = "true" 	contentWidth="1300px">
+	
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm 
+			id="DisplayOrderDetailsForm"
+			editable="false"
+			layout="ResponsiveGridLayout" 
+			
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="12"
+			labelSpanS="12"
+			
+			adjustLabelSpan="false"
+			
+			emptySpanXL="0"
+			emptySpanL="0"
+			emptySpanM="0"
+			emptySpanS="0"
+			
+			columnsXL="2"
+			columnsL="2"
+			columnsM="2"
+			singleContainerFullSize="false" >
+			
+			<f:content>
+			    <core:Title text="General" /> 
+                <Label text="Order" />
+				<Text text="{/OrderNo}"/> 
+				<Label text="Site"  />
+				<Text text="{/Plant}"/>
+                <Label text="Order Type" />
+				<Text text="{/DocType}"/>
+				<Label text="Order Status"  />
+				<Text text="{/SystemStatus}"/>
+                <Label text="Total Qty"  />
+				<Text text="{/Quantity}"/>
+                <Label text="Traceability"  />
+				<Text text=""/>
+                <Label text="Model/Unit"  />
+				<Text text="{/Unit}"/>
+                <Label text="Mission"  />
+				<Text text=""/>
+
+                <core:Title text="" /> 
+                <Label text="Rev Status"  />
+				<Text text="{/ZmesRevStatus}"/>				
+				<Label text="Rev Type"  />
+				<Text text="{/ZmesDevType}"/>
+		        <Label text="Order Rev"  />
+				<Text text="{/ZmesRevision}"/>
+	 	        <Label text="Order MCN"  />
+				<Link text="{/ZmesMcn}" href="{/OrdermcnUrl}" target="_blank"/>   
+         		<Label text="Order Rev Author"  />
+				<Text text="{/ZmesRevAuthor}"/>            
+		 
+		       <core:Title text="Time" /> 
+                <Text text="Planned"/>
+                <Label text="Setup Time"  />
+				<Text text="{/Vgw01}"/>
+                <Label text="Run Time"  />
+				<Text text="{/Vgw03}"/> 
+                <Label text="Total Time"  />
+				<Text text="{/Total}"/> 
+
+                <core:Title text="" /> 
+                <Text text="Actual"/>
+                <Label text="Total Labor Collected"  />
+				<Text text="{/Time}"/>
+
+                <core:Title text="Plan" /> 
+                <Label text="Plan Number"  />
+                <Text text="{/Group}"/>
+                <Label text="Plan Title"  />
+				<Text text="{/Description}"/>
+                <Label text="Site"  />
+				<Text text="{/Plant}"/>
+                <Label text="Plan Type" />
+				<Text text="{/OrbitPlanSType}"/>
+                <Label text="Plan Author" />
+				<Text text="{/PlanrevUser}"/>
+
+                <core:Title text="" /> 
+                <Label text="Rev Status"  />
+                <Text text="{/ZcurrentStatus}"/>
+                <Label text="Group"  />
+				<Text text="{/Group}"/>
+                <Label text="Plan Rev"  />
+                <Text text="{/GroupCntr}"/>
+                <Label text="Plan MCN"  />
+				<Link  text="{/ZmesOrbitsMcn}" href="{/Text}" target="_blank"/>
+
+			</f:content>
+		</f:SimpleForm>    
+	</VBox>
+	
+	<buttons>
+		<Button text="Close" 	press="closeDisplayOrderDetailsDialog"    id="CloseDisplayOrderDetailsDialogBtn"	/>
+	</buttons>
+	
+	</Dialog>
+</core:FragmentDefinition>

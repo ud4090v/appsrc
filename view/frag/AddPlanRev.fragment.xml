@@ -1,0 +1,149 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:richtexteditor="sap.ui.richtexteditor"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"	
+>
+	
+	<Dialog id="NewRevDialog" title="New Order Revision" class="sapUiSizeCompact">
+		<NavContainer
+			id="navCon"
+			width="620px"
+			height="600px">
+			<Page id="p1" showHeader="false">
+				<content>
+					<HBox justifyContent="Center">
+						<Title text="How would you like to add an MCN for this Order Revision?" class="sapUiLargeMargin" titleStyle="H4"/>
+					</HBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button text="Use Existing MCN"	press="useExisitngMCN"	type="Emphasized"/>
+						<Button text="Create New MCN" 	press="createNewMCN"	type="Emphasized"/>
+						<Button text="Cancel" 			press="cancelNewPlanDialog"		/>
+					</Toolbar>
+				</footer>
+			</Page>
+
+			<Page id="p2" showHeader="false">
+				<content>
+					<List id="MCNList" items="{mcnListModel>/}">
+						<items>
+							<StandardListItem title="{mcnListModel>item_id}" info="{mcnListModel>mcn_title}" type="Active" 	press="mcnSelected"/>
+						</items>
+					</List>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button text="Back" 	press="navToPage1NewPlanDialog"	/>
+						<Button text="Cancel" 	press="cancelNewPlanDialog"	/>
+					</Toolbar>
+				</footer>
+			</Page>
+
+			<Page id="p3" showHeader="false">
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm 
+							id="NewMCNForm"
+							width="600px"
+							editable="true"
+							layout="ResponsiveGridLayout"
+							title="MCN"
+							
+							labelSpanXL="3"
+							labelSpanL="3"
+							labelSpanM="3"
+							labelSpanS="12"
+							
+							adjustLabelSpan="false"
+							
+							emptySpanXL="4"
+							emptySpanL="4"
+							emptySpanM="4"
+							emptySpanS="0"
+							
+							columnsXL="2"
+							columnsL="2"
+							columnsM="1"
+							singleContainerFullSize="false" >
+							
+							<f:content>
+								<!-- <Label text="MCN Title"  />
+								<Input id="Title" value="{ctx>/title}"/> -->
+								
+								<Label text="Description of Change"  />
+								<TextArea id="Instructions" value="{ctx>/instructions}" rows="10"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>						
+				</content>
+				<footer>
+					<Toolbar>
+					<ToolbarSpacer/>
+						<Button text="Create" id='PlanRevMCNCreate'	press="saveNewMCN"	type="Accept"/>
+						<Button text="Save"   id='PlanRevMCNEdit'	press="editMCN"	type="Accept"/>
+						<Button text="Back" 	press="navToPage1NewPlanDialog"	/>
+						<Button text="Cancel" 	press="cancelNewPlanDialog"	/>
+					</Toolbar>
+				</footer>
+			</Page>
+
+			<Page id="p4" showHeader="false">
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm 
+							width="600px"
+							editable="true"
+							layout="ResponsiveGridLayout"
+							title="Create New Order Revision Details"
+							
+							labelSpanXL="3"
+							labelSpanL="3"
+							labelSpanM="3"
+							labelSpanS="12"
+							
+							adjustLabelSpan="false"
+							
+							emptySpanXL="4"
+							emptySpanL="4"
+							emptySpanM="4"
+							emptySpanS="0"
+							
+							columnsXL="2"
+							columnsL="2"
+							columnsM="1"
+							singleContainerFullSize="false" >
+							
+							<f:content>
+								<Label text="Order"  />
+								<Text text="{ctx>/OrderNo}"/>
+
+								<Label text="Revision"  />
+								<Text text="{ctx>/NewRevNo}"/>
+
+								<Label text="Deviation Type"  />
+								<Text text="{ctx>/DevTxt}"/>
+
+								<Label text="MCN"  />
+								<Text text="{ctx>/OrbitsMCN}"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>						
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button text="Back" 	press="navToPage2NewPlanDialog"	/>
+						<Button text="Save" 	press="addPlanRevision"	        id="AddNewPlanRevBtn"		type="Accept"/>
+						<Button text="Cancel" 	press="cancelNewPlanDialog"	/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</NavContainer>	
+	</Dialog>
+</core:FragmentDefinition>

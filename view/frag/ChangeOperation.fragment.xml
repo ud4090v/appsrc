@@ -1,0 +1,88 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f = "sap.ui.layout.form"
+	xmlns:l = "sap.ui.layout"
+	xmlns:rt = "sap.ui.richtexteditor"
+	class="sapUiSizeCompact" >
+
+	<Dialog draggable="true" resizable="true" title="Add Operation"  id = "createOpDialog">
+		<content id = "createOpFragmentContent">
+            <VBox  width = "950px" class="sapUiSizeCompact myForm">
+            
+            <f:SimpleForm class="sapUiSizeCompact"
+                id="createHeader"
+                editable = "true"
+                maxContainerCols="2"
+                layout="ResponsiveGridLayout"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="3"
+                emptySpanL="1"
+                emptySpanM="1"
+                emptySpanS ="1"
+                columnsL="2"
+                columnsM="2">
+
+                <f:content>
+                    <core:Title text="General"/>
+                    <Label text="Operation Number" class="myText" id="create_OpNumberLbl" />
+                        <Input class="myInput" value = "{input>/OperationNo}" maxLength="40" enabled="false" editable="false"/>
+                    <Label/>
+                    <Label text = "Work Center" id="create_Workcenter" />
+                    	<Input value="{input>/WorkCenter}"  />
+                    <Label/>
+                    <Label text ="Description" id="create_Descr"/>
+                    	<Input value ="{input>/OpText}"  />
+                  	<Label/>
+                    <Label text = "Plant"  />
+                    	<Input value = "{input>/Plant}" />
+                    <Label/>
+                    <Label text = "Control Key"  />
+                    	<Input value = "{input>/ControlKey}" />
+                    <Label/>
+                </f:content>
+            </f:SimpleForm>
+
+            <f:SimpleForm class="sapUiSizeCompact"
+                id="createTime"
+                editable = "true"
+                maxContainerCols="2"
+                layout="ResponsiveGridLayout"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="3"
+                emptySpanL="1"
+                emptySpanM="1"
+                emptySpanS ="1"
+                columnsL="2"
+                columnsM="2">
+
+                <f:content>
+                    <core:Title text="Time"/>
+                    <Label text="Setup" type="Number" id="create_opSetup" />
+                        <Input value = "{input>/OpSetupTime}" />
+                    <Label/>
+                    <Label text = "Machine" type="Number" id="create_opMachine" />
+                    	<Input value ="{input>/OpRunTime}"  />
+                    <Label/>
+                    <Label text ="Labor" type="Number" id="create_opLabor"/>
+                    	<Input value ="{input>/OpLaborTime}" />
+                  	<Label/>
+                </f:content>
+            </f:SimpleForm>
+
+
+            </VBox>
+		</content>
+		<beginButton>
+			<Button id="addOpBtn" text="Save" press="onChangeOperation" type="Accept"/>
+		</beginButton>
+		<endButton>
+			<Button id="cancelOpBtn" text = "Cancel" press="closeChangeOpDialog" />
+		</endButton>
+	</Dialog>
+	
+
+	
+</core:FragmentDefinition>

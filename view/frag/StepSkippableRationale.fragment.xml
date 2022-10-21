@@ -1,0 +1,46 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
+	xmlns:richtexteditor="sap.ui.richtexteditor"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"	
+>
+	
+	<Dialog id="StepSkippableRationaleDialog" title="Skippable Rationale - Op {backend>Activity} / Step {backend>WorkStep} " class="sapUiSizeCompact" resizable = "true" draggable = "true" 	contentWidth="400px">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm 
+			id="StepSkippableRationaleForm"
+			editable="false"
+			layout="ResponsiveGridLayout" 
+			
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="12"
+			labelSpanS="12"
+			
+			adjustLabelSpan="false"
+			
+			emptySpanXL="0"
+			emptySpanL="0"
+			emptySpanM="0"
+			emptySpanS="0"
+			
+			columnsXL="2"
+			columnsL="2"
+			columnsM="2"
+			singleContainerFullSize="false" >
+			
+			<f:content>
+                <Text  text="{backend>SkipTxt}"/>
+			</f:content>
+		</f:SimpleForm>	    
+	</VBox>
+
+	<buttons>
+		<Button text="Close" 	press="closeStepSkippableRationaleDialog"    id="CloseStepSkippableRationaleDialogBtn"	/>
+	</buttons>
+
+	</Dialog>
+</core:FragmentDefinition>

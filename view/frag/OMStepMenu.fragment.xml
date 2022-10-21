@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Menu itemSelected="onOpMenuAction">
+
+		<MenuItem icon="sap-icon://edit" text="Revise Step" visible="{= ${app>/fEdit} &amp;&amp; !${app>/orderLocked} &amp;&amp; !${step>/Revise}}"
+			press="onReviseStep" />
+		<MenuItem icon="sap-icon://edit" text="Edit Step" visible="{= ${app>/fEdit} &amp;&amp; !${app>/orderLocked} &amp;&amp; ${step>/Revise} &amp;&amp; ${step>/FEdit} &amp;&amp; !${step>/Loekz}}"
+			press="onEditStep" />
+		<MenuItem icon="sap-icon://delete" text="Delete Step" visible="{= ${app>/fEdit} &amp;&amp; !${app>/orderLocked} &amp;&amp; ${step>/Revise} &amp;&amp; ${step>/FDelete} &amp;&amp; !${step>/Loekz}}"
+			press="onDeleteStep" />
+		<MenuItem icon="sap-icon://copy" text="Copy Step" visible="{= ${app>/fEdit} &amp;&amp; !${app>/orderLocked} &amp;&amp; !${step>/Loekz}}"
+			press="onCopyStep" />
+		<MenuItem icon="sap-icon://undo" text="Restore Step" visible="{= !${app>/orderLocked} &amp;&amp; ${step>/Revise} &amp;&amp; ${step>/Loekz}}"
+			press="onDeleteStep" />
+<!--  
+		<MenuItem icon="sap-icon://numbered-text" text="Re-Number"
+			press="onRenumberStep" />
+ -->
+	</Menu>
+</core:FragmentDefinition>

@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ResponsivePopover
+		id="orderRevSel"
+		title="Select Order Revision"
+		afterClose="handleRevisionSelCancel"
+		placement="Bottom">
+		<List
+			id="oRevSel"
+			mode="SingleSelectMaster"
+			includeItemInSelection="true"
+			selectionChange="handleRevisionSelect"
+			items="{/OrderRevisionSet}">
+			<StandardListItem 
+				id="oRevSelTpl"
+				title="{Name}"
+				info="{RevStatus}"
+				 />
+		</List>
+	</ResponsivePopover>
+</core:FragmentDefinition>

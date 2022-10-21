@@ -1,0 +1,7 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core">
+	<Menu itemSelected="onOpMenuAction">
+		<MenuItem icon="sap-icon://add" text="Add Step" press="onAddStep" visible="{/FsAdd}" />
+	</Menu>
+</core:FragmentDefinition>
