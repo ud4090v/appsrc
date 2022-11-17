@@ -1,0 +1,151 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:fb="sap.ui.comp.filterbar">
+
+	<Dialog
+		id="PremSelectionDialog"
+		title="Remove Parts"
+		contentWidth="80rem" contentHeight="40rem" resizable = "true" draggable = "true">
+		 <content>
+			<fb:FilterBar id="FilterBar" clear="onReset" reset="onReset" search="onSearchPrem" showClearButton="true" showGoOnFB="true" filterBarExpanded="true" showFilterConfiguration="false" useToolbar="false">
+				<fb:filterItems>
+					<fb:FilterItem name="Component" label="Component">
+						<fb:control>
+							<Input id="f_Idnrk" value="{FilterModel>/Idnrk}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="Order" label="Order Number">
+						<fb:control>
+							<Input id="f_Aufnr" value="{FilterModel>/Aufnr}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="Model" label="Model">
+						<fb:control>
+							<Input id="f_Model" value="{FilterModel>/Model}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="Unit" label="Unit">
+						<fb:control>
+							<Input id="f_Unit" value="{FilterModel>/Unit}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="Mission" label="Mission">
+						<fb:control>
+							<Input id="f_Mission" value="{FilterModel>/Mission}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="OrdHdrSernr" label="Parent Serial Number">
+						<fb:control>
+							<Input id="f_OrdHdrSernr" value="{FilterModel>/OrdHdrSernr}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="Sernr" label="Serial Number">
+						<fb:control>
+							<Input id="f_Sernr" value="{FilterModel>/Sernr}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="Batch" label="Batch">
+						<fb:control>
+							<Input id="f_Charg" value="{FilterModel>/Charg}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+					<fb:FilterItem name="RefDes" label="Reference Designator">
+						<fb:control>
+							<Input id="f_RefDes" value="{FilterModel>/RefDes}" submit="onSearchPrem"/>
+						</fb:control>
+					</fb:FilterItem>
+
+				</fb:filterItems>
+			</fb:FilterBar>
+
+	<Table id="searchPremTable" 
+		inset="false"  
+		growing="true"
+		growingThreshold="20"
+		growingScrollToLoad="true"
+		items="{}" 
+		mode="MultiSelect"
+		sticky="ColumnHeaders">
+		<ColumnListItem id="premTabItem" type="Navigation">
+			<cells>
+                <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+					<Title text="{backend>Idnrk}" />
+                    <Label text="{backend>Maktx}" />
+                </VBox>
+
+				<!-- <Text text="{backend>Idnrk}" /> -->
+				<Text text="{backend>Aufnr}" />
+				<Text text="{backend>Werks}" />
+				<Text text="{backend>Model}/{backend>Unit}" />
+				<Text text="{backend>Mission}" />
+				<Text text="{backend>OrdHdrSernr}" />
+				<Text text="{backend>Sernr}" />
+				<Text text="{backend>Charg}" />
+				<Text text="{backend>RefDes}" />				
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="25%">
+				<header>
+					<Text text="Component" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Order Number" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Site" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Model/Unit" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Mission" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Parent Serial Number" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Serial Number" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Batch" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Reference Designator" />
+				</header>
+			</Column>
+
+		</columns>
+		</Table>
+		 </content>
+		 	<buttons>
+				<Button text="Add" 	type="Emphasized" press="onPremListItemPress"    	/>
+				<Button text="Cancel" 	press="closePremSelectionDialog"    id="ClosePremSelectionDialogBtn"	/>
+			</buttons>
+	</Dialog>
+
+</core:FragmentDefinition>
