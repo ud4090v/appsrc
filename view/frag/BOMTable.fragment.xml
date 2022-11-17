@@ -1,0 +1,157 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+    
+	<List items="{ path : 'contentModel>', templateShareable : true }"> 
+	 
+<!-- 	    <headerToolbar> -->
+<!-- 		    <OverflowToolbar> -->
+<!-- 		    <Title text="Parts !j!!!" level="H2" class="ULAWorkStepTitle"/> -->
+<!-- 	    	</OverflowToolbar> -->
+<!-- 	     </headerToolbar> -->
+	
+	<!-- mode="{= ( !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} &amp;&amp; ${contentModel>Editable} ) ? 'MultiSelect': none }" -->
+	  <CustomListItem>
+	      <Panel expandable="true" expanded="true" headerText="{= ${contentModel>HdrSerialized} ? 'Parent Serial '+${contentModel>HdrSerialNo}  : ${contentModel>HdrSerialNo}}" 
+	             class="sapUiSmallMarginBegin sapUiTinyMarginTop">
+				<Table 	items="{path:'contentModel>Components', templateShareable : false}" 						
+						updateFinished="renderSelectionBox"
+						selectionChange="onSelectionChange">
+					<headerToolbar>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://add" 		press="addBOMRow" visible="{= !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} }"/>
+							<Button icon="sap-icon://decline" 	press="onDelComponent" visible="{= !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} }"/>
+						</OverflowToolbar>
+					</headerToolbar>	
+
+					<ColumnListItem>
+						<cells>
+				     	    <CheckBox selected="{=${contentModel>Selected}}" editable="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} &amp;&amp; ${contentModel>SelCheckBox} }"
+							                                                 visible="{=${contentModel>SelCheckBox} &amp;&amp; ${contentModel>Hdr} }"/>
+		         			<ObjectIdentifier title="{contentModel>Component}" text="{contentModel>Description}" visible="{contentModel>SelCheckBox}"/> 
+
+							<!-- <Input editable="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} }" 
+							       visible="{contentModel>SelCheckBox}"
+								   type="Number"
+								   width="6rem" 
+								   value="{contentModel>AvailQty}"  
+								   change="onQtyChange"/> -->
+							
+							<Button icon="sap-icon://add" 	press="onQtyLine" type="Transparent"  visible="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} &amp;&amp; ${contentModel>SelCheckBox} &amp;&amp; ${contentModel>Serialized}}"/>
+							<Input editable="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} &amp;&amp; !${contentModel>Serialized} }" 
+							       visible="{contentModel>SelCheckBox}"
+								   type="Number"
+								   width="6rem" 
+								   value="{contentModel>AvailQty}"
+								   change="onQtyChange"/>
+
+
+                            <Text  width="2rem" 	text ="{contentModel>Unit}" class="sapUiSmallMarginEnd" textAlign="End" visible="{contentModel>SelCheckBox}"/>
+<!--                             <ObjectIdentifier title="{uiModel>BatchNo}"/> -->
+							<!-- <Text  width="4rem" 	text ="{contentModel>Category}" class="sapUiSmallMarginEnd" textAlign="Begin" />
+							<Text  width="2.5rem" 	text ="{contentModel>Plant}" class="sapUiSmallMarginEnd" textAlign="Begin" />
+							<Text  width="3rem" 	text ="{contentModel>StLoc}" class="sapUiSmallMarginEnd" textAlign="Begin" />
+							<CheckBox   selected="{input>/Bulk}" displayOnly="true" />
+							<Text  width="3rem" 	text ="{contentModel>Specstock}" class="sapUiSmallMarginEnd" textAlign="Begin" /> -->
+							<Text  width="10rem" 	text ="{contentModel>SerialNo}" class="sapUiSmallMarginEnd" textAlign="Begin" />
+							<!--	
+							<ComboBox 
+									 items="{path: 'contentModel>/ShlpSerialNosSet'}"
+									 visible="{contentModel>Serialized}"
+									 showSecondaryValues="true"
+									 selectedKey="{contentModel>SerialNo}" 
+									 loadItems="handleLoadItems"
+									 modelContextChange="comboBoxCopyContext"
+									 change="handleSelectiionChange"
+									 editable="{contentModel>Editable}"
+									 selectionChange="onSelectionChangeSerNum">	
+									<core:Item key="{contentModel>OrdSerialNo}" text="{contentModel>Description}"/>		
+							</ComboBox>
+							-->
+							<!-- <ObjectIdentifier text="{contentModel>RefDesignator}" visible="{= !${contentModel>Editable} || ${contentModel>Reorder} || ${contentModel>/OrderLock} || !${contentModel>/Revise} }" /> -->
+							<Input editable="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} &amp;&amp; ${contentModel>DelCheck} }" 
+							       visible="{contentModel>Serialized}"
+								   width="11rem" maxLength="20" value="{contentModel>RefDesignator}"  
+								   change="onRefDesValueChange"/>
+							<ObjectIdentifier text="{path: 'contentModel>Expdate', formatter : '.formatDate'}" />
+			                <Button icon="sap-icon://slim-arrow-down" type="Transparent" press="onMovePartDown" ariaLabelledBy="movePartDown" visible="{contentModel>SelCheckBox}"/>
+            			    <Button icon="sap-icon://slim-arrow-up" type="Transparent" press="onMovePartUp" ariaLabelledBy="movePartUp" visible="{contentModel>SelCheckBox}"/>
+							<Button icon="sap-icon://decline" 	press="onDelLine" type="Transparent" visible="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} &amp;&amp; ${contentModel>DelCheck} }"/>
+						</cells>
+					</ColumnListItem>
+					<columns>
+						<Column width="4rem" demandPopin="true">
+		    				<CheckBox select="onParentClickedPartsTable" editable="{= ${contentModel>Editable} &amp;&amp; !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock}}" >
+		    				</CheckBox>
+		   				</Column>
+						<Column width="12rem" >
+							<header>
+								<Text text="Component" />
+							</header>
+						</Column>
+						<Column width="48px" />
+						<Column >
+							<header>
+								<Text text="Quantity" />
+							</header>
+						</Column>
+						<Column width="3rem">
+							<header>
+								<Text text="UOM" />
+							</header>
+						</Column>
+<!-- 						<Column> -->
+<!-- 							<header> -->
+<!-- 								<Text text="Batch" /> -->
+<!-- 							</header> -->
+<!-- 						</Column> -->
+						<!-- <Column >
+							<header>
+								<Text text="Item Cat" />
+							</header>
+						</Column>
+						<Column width="4rem">
+							<header>
+								<Text text="Plant" />
+							</header>
+						</Column>
+						<Column width="4rem">
+							<header>
+								<Text text="St Loc" />
+							</header>
+						</Column>
+						<Column >
+							<header>
+								<Text text="Bulk" />
+							</header>
+						</Column>
+						<Column width="4rem">
+							<header>
+								<Text text="Sp Stock Ind." />
+							</header>
+						</Column> -->
+						<Column width="10rem">
+						    <header>
+								<Text text="Serial Number" />
+							</header>
+						</Column>
+						<Column width="12rem" >
+							<header>
+								<Text text="Reference Designator" />
+							</header>
+						</Column>
+						<Column >
+							<header>
+								<Text text="Expiration Date" />
+							</header>
+						</Column>
+			            <Column width="48px" visible="{= !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} }"/>  
+            			<Column width="48px" visible="{= !${contentModel>Reorder} &amp;&amp; !${contentModel>/OrderLock} &amp;&amp; ${contentModel>/Revise} }"/>  
+						<Column width="48px" />
+					</columns>
+				</Table>
+			</Panel>
+		</CustomListItem>
+	</List>
+</core:FragmentDefinition>
